@@ -17,7 +17,6 @@ public class FoodController {
     @GetMapping("/restaurant/{restaurantId}/foods")
     public List<Food> getFoodList(@PathVariable Long restaurantId) {
         return foodService.findFoodList(restaurantId);
-
     }
 
     //음식 등록
