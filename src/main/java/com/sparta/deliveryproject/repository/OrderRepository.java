@@ -1,4 +1,7 @@
 package com.sparta.deliveryproject.repository;
 
-public interface OrderRepository {
+import com.sparta.deliveryproject.domain.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderRepository extends JpaRepository<Order, Long> {
 }

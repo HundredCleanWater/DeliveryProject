@@ -20,14 +20,14 @@ public class Restaurant {
     private Long id;
 
     @Column(nullable = false)
-    @JsonIgnore
+
     private String name;
 
     @Column(nullable = false)
-    @JsonIgnore
+
     private int minOrderPrice;
 
-    @JsonIgnore
+
     @Column(nullable = false)
     private int deliveryFee;
 

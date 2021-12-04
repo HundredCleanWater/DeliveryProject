@@ -1,17 +1,18 @@
 package com.sparta.deliveryproject.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FoodRequestDto {
+public class OrderListResponseDto {
     private String name;
+    int quantity;
     private int price;
+
+
+
+
 }

@@ -1,39 +1,42 @@
 package com.sparta.deliveryproject.domain;
 
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
+import java.util.*;
 
 @Getter
+@Setter
+@Entity
 @NoArgsConstructor
-public class Order {
+@Table(name = "ORDERS")
+public class Order  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Restaurant restaurant;
 
-    @Column(name = "minOrderPrice")
-    private int minOrderPrice;
+    @Column(nullable = false)
+    private int totalPrice;
 
-    @Column(name = "deliveryFee")
+    @Column(nullable = false)
     private int deliveryFee;
 
-    @Builder
-    public Order(Long id, String name, int minOrderPrice, int deliveryFee) {
-        this.id = id;
-        this.name = name;
-        this.minOrderPrice = minOrderPrice;
-        this.deliveryFee = deliveryFee;
+    @OneToMany(mappedBy = "orderMenu")
+    private List<OrderList> foods = new ArrayList<>();
 
+    public Order(Restaurant restaurant, int totalPrice, int deliveryFee, List<OrderList> food) {
+        this.restaurant = restaurant;
+        this.totalPrice = totalPrice;
+        this.deliveryFee = deliveryFee;
     }
+
+
 }

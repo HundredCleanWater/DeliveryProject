@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FoodRepository extends JpaRepository<Food, Long> {
-    List<Food> findFoodByRestaurant(Restaurant restaurant);
-    Optional<Food> findFoodByRestaurantAndName(Restaurant restaurant, String foodName);
+    List<Food> findFoodByRestaurantId(Long restaurantId);
+    Optional<Food> findByRestaurantIdAndName(Long restarurantId, String name);
 
-//    Boolean existsByNameAndRestaurantId(String foodName, Long restaurantId);
+
 }

@@ -1,18 +1,15 @@
 package com.sparta.deliveryproject.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.sparta.deliveryproject.dto.FoodRequestDto;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
-@ToString
+
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 public class Food {
 
 
@@ -21,25 +18,25 @@ public class Food {
     private Long id;
 
     @Column(nullable = false)
-    @JsonIgnore
     private String name;
 
     @Column(nullable = false)
-    @JsonIgnore
     private int price;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn( nullable = false)
     private Restaurant restaurant;
 
-
-
+    public Food(Restaurant restaurant, FoodRequestDto requestDtos) {
+        this.restaurant = restaurant;
+        this.name = requestDtos.getName();
+        this.price = requestDtos.getPrice();
+    }
 
     @Builder
-    public Food(Restaurant restaurant, FoodRequestDto requestDto) {
+    public Food(Restaurant restaurant, String name, int price){
         this.restaurant = restaurant;
-        this.name = requestDto.getName();
-        this.price = requestDto.getPrice();
+        this.name = name;
+        this.price = price;
     }
 }

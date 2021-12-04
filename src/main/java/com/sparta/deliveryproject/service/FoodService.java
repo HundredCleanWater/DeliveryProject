@@ -20,19 +20,19 @@ public class FoodService {
     String errorMessage = "";
 
     @Transactional
-    public void registerFood(Long restaurantId, List<FoodRequestDto> requestDtoList) {
+    public void registerFood(Long restaurantId, List<FoodRequestDto> requestDtos) {
 
 
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
                 () -> new IllegalArgumentException("음식점이 존재하지 않습니다."));
 
 
-        for (FoodRequestDto requestDto : requestDtoList) {
+        for (FoodRequestDto requestDto : requestDtos) {
             int price = requestDto.getPrice();
 
 
-            Optional<Food> found = foodRepository.findFoodByRestaurantAndName(restaurant, requestDto.getName());
-            if(found.isPresent()){
+            Optional<Food> found = foodRepository.findByRestaurantIdAndName(restaurantId, requestDto.getName());
+            if (found.isPresent()) {
                 errorMessage = "동일한 음식명을 사용 할 수 없습니다.";
                 throw new IllegalArgumentException(errorMessage);
             }
@@ -46,20 +46,19 @@ public class FoodService {
             }
 
 
-
             Food food = new Food(restaurant, requestDto);
             foodRepository.save(food);
-        }
 
+        }
     }
 
-    @Transactional
-    public List<Food> findFoodList(Long restaurantId) {
-        Restaurant restaurant = restaurantRepository.findById(restaurantId)
-                .orElseThrow(
-                        () -> new IllegalArgumentException("해당 레스토랑이 없습니다."));
+            @Transactional
+            public List<Food> findFoodList (Long restaurantId){
+                Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                        .orElseThrow(
+                                () -> new IllegalArgumentException("해당 음식점이 없습니다."));
 
-        return foodRepository.findFoodByRestaurant(restaurant);
-   }
-}
+                return foodRepository.findFoodByRestaurantId(restaurantId);
+            }
+        }
 
